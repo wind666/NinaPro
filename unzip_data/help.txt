@@ -1,0 +1,7 @@
+DB1
+it is rectifired
+sampling rate = 2 khz
+E2 has 17 classes
+every movement repeate 10 times
+data.stimulus is label
+data.restimulus is relabel
