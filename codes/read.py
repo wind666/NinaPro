@@ -4,7 +4,7 @@ from scipy.io import loadmat
 from sklearn.model_selection import train_test_split
 from scipy import signal
 import matplotlib.pyplot as plt
-%matplotlib inline
+#%matplotlib inline
 from window_slider import Slider
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -36,7 +36,7 @@ EMG=[]
 subject=[]
 lab=[]
 for j in range(1,11):
-    dire=("C:/Users/HP/Desktop/git_clone/NinaPro/unzip_data/"+'S' + str(j) + '_' + 'A1_E2.mat')
+    dire=("/home/ubuntu/mfazeli/github/NinaPro/unzip_data/"+'S' + str(j) + '_' + 'A1_E2.mat')
     ninapro_DB1=loadmat(dire)
     
     lab.extend(ninapro_DB1['restimulus'])
@@ -106,7 +106,7 @@ def all_indices(value, qlist):
         except ValueError:
             break
     return indices
-#class0=all_indices(0,dataemg['label'])
+class0=all_indices(0,dataemg['label'])
 #class1=all_indices(1,dataemg['label'])
 #class2=all_indices(2,dataemg['label'])
 #make a copy from dataset
@@ -170,27 +170,27 @@ y_pred=clf.predict(x_test)
 from sklearn.metrics import accuracy_score
 print("accuracy = %.2f"%accuracy_score(y_test,y_pred))
 accuracy=np.mean(y_pred==y_test)
-print("accuracy of test data=%.2f" %accuracy)
+print("MLP:\n accuracy of test data=%.2f" %accuracy)
 y_pred_train=clf.predict(x_train)
 accuracy=np.mean(y_pred_train==y_train)
 print("accuracy of train data=%.2f" %accuracy)
-import matplotlib.pyplot as plt
-%matplotlib inline
-from sklearn.metrics import confusion_matrix
-cm=confusion_matrix(y_test,y_pred, labels=np.unique(y_test))
-plt.figure(figsize=(8,8))
-plt.imshow(cm,cmap=plt.cm.Blues,interpolation='nearest')
-plt.xticks(range(17))
-plt.yticks(range(17))
-plt.colorbar()
-plt.show()
+#import matplotlib.pyplot as plt
+#%matplotlib inline
+#from sklearn.metrics import confusion_matrix
+#cm=confusion_matrix(y_test,y_pred, labels=np.unique(y_test))
+#plt.figure(figsize=(8,8))
+#plt.imshow(cm,cmap=plt.cm.Blues,interpolation='nearest')
+#plt.xticks(range(17))
+#plt.yticks(range(17))
+#plt.colorbar()
+#plt.show()
 #LDA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 clf=LDA()
 clf.fit(x_train,y_train)
 y_pred=clf.predict(x_test)
 accuracy=np.mean(y_pred==y_test)
-print("accuracy of test data=%.2f" %accuracy)
+print("LDA:\n accuracy of test data=%.2f" %accuracy)
 y_pred_train=clf.predict(x_train)
 accuracy=np.mean(y_pred_train==y_train)
 print("accuracy of train data=%.2f" %accuracy)
@@ -200,7 +200,7 @@ clf=QDA()
 clf.fit(x_train,y_train)
 y_pred=clf.predict(x_test)
 accuracy=np.mean(y_pred==y_test)
-print("accuracy of test data=%.2f" %accuracy)
+print("QDA:\n accuracy of test data=%.2f" %accuracy)
 y_pred_train=clf.predict(x_train)
 accuracy=np.mean(y_pred_train==y_train)
 print("accuracy of train data=%.2f" %accuracy)
@@ -210,7 +210,7 @@ clf = RF(max_depth=200, random_state=0)
 clf.fit(x_train,y_train)
 y_pred=clf.predict(x_test)
 accuracy=np.mean(y_pred==y_test)
-print("accuracy of test data=%.2f" %accuracy)
+print("RF:\n accuracy of test data=%.2f" %accuracy)
 y_pred_train=clf.predict(x_train)
 accuracy=np.mean(y_pred_train==y_train)
 print("accuracy of train data=%.2f" %accuracy)
@@ -221,7 +221,7 @@ clf = KNeighborsClassifier(n_neighbors=3)
 clf.fit(x_train,y_train)
 y_pred=clf.predict(x_test)
 accuracy=np.mean(y_pred==y_test)
-print("accuracy of test data=%.2f" %accuracy)
+print("KNN:\n accuracy of test data=%.2f" %accuracy)
 y_pred_train=clf.predict(x_train)
 accuracy=np.mean(y_pred_train==y_train)
 print("accuracy of train data=%.2f" %accuracy)
@@ -232,7 +232,7 @@ clf.fit(x_train,y_train)
 #clf.fit(x_train,y_train,kernel='rbf')
 y_pred=clf.predict(x_test)
 accuracy=np.mean(y_pred==y_test)
-print("accuracy of test data=%.2f" %accuracy)
+print("SVM:\n accuracy of test data=%.2f" %accuracy)
 y_pred_train=clf.predict(x_train)
 accuracy=np.mean(y_pred_train==y_train)
 print("accuracy of train data=%.2f" %accuracy)
@@ -261,10 +261,10 @@ names = ["Nearest Neighbors", "Linear SVM", "RBF SVM", "Decision Tree",
          "Random Forest", "AdaBoost", "Naive Bayes", "LDA", "QDA"]
 classifiers = [
     KNeighborsClassifier(3),
-    SVC(kernel="linear", C=0.025),
+    SVC(kernel="linear", C=0.25),
     SVC(gamma=2, C=1),
-    DecisionTreeClassifier(max_depth=200),
-    RandomForestClassifier(max_depth=200, n_estimators=10, max_features=1),
+    DecisionTreeClassifier(max_depth=500),
+    RandomForestClassifier(max_depth=500, n_estimators=10, max_features=1),
     AdaBoostClassifier(),
     GaussianNB(),
     LDA(),
@@ -305,18 +305,18 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis as QDA
 
 
-names = ["Nearest Neighbors", "Linear SVM", "RBF SVM", "Decision Tree",
-         "Random Forest", "AdaBoost", "Naive Bayes", "LDA", "QDA"]
+names = ["Nearest Neighbors", "Decision Tree",
+        "Random Forest", "AdaBoost", "Naive Bayes", "LDA", "QDA","RBF SVM"]
 classifiers = [
     KNeighborsClassifier(3),
-    SVC(kernel="linear", C=0.025),
-    SVC(gamma=2, C=1),
+    #SVC(kernel="linear", C=0.025),
     DecisionTreeClassifier(max_depth=5),
     RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1),
     AdaBoostClassifier(),
     GaussianNB(),
     LDA(),
-    QDA()]
+    QDA(),
+    SVC(gamma=2, C=1)]
 
 X = StandardScaler().fit_transform(emg_17class['data'])
 
